@@ -59,6 +59,6 @@ ssize_t proc_read(
 module_init(proc_init);
 module_exit(proc_exit);
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("Assignment1");
+MODULE_DESCRIPTION("Assignment2");
 MODULE_AUTHOR("SCG");
 
