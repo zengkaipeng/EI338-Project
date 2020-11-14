@@ -52,7 +52,7 @@ Compile the source code according to the make file (which will given at the end 
 
 #### Result of Lab1
 
-<img src='/Lab1-result.png'>
+<img src='./Lab1-result.png'>
 
 From the figure above, we can see the value of `GOLDEN_RATIO_PRIME` is 7046029254386353131, and the greatest common divider of 3300 and 24 is 12.
 
