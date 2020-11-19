@@ -207,8 +207,6 @@ use `insmod` command to install the module and enter `cat /proc/seconds` in term
 
 <img src='./A2-result.png'>
 
-
-
 ## Makefile
 
 ```shell
