@@ -307,13 +307,13 @@ int main()
 			bool Is_quo = temp_char == '"';
 			if(temp_char == '|')
 			{
-				printf("syntax error near unexpected token `|'\n");
 				while(true)
 				{
 					if(temp_char == '\n' && !Is_quo) break;
 					temp_char = getchar();
 					Is_quo ^= (temp_char == '"');
 				}
+				printf("syntax error near unexpected token `|'\n");
 				continue;
 			}
 			while(true)
