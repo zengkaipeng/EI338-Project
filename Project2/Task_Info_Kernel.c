@@ -30,7 +30,6 @@ static struct file_operations proc_ops = {
 
 int proc_init(void)
 {
-	/* creates the /proc/hello entry */
 	proc_create(PROC_NAME, 0666, NULL, &proc_ops);
 	return 0;
 }
@@ -62,7 +61,7 @@ ssize_t proc_read(
 	if(tsk == NULL) return 0;
 	
 	rv = sprintf(
-		buffer, "command = [%s] pid=[%d] state = [%ld]\n",
+		buffer, "command = [%s] pid = [%d] state = [%ld]\n",
 		tsk -> comm, tsk -> pid, tsk -> state
 	);
 	
