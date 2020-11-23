@@ -109,12 +109,12 @@ int main(void)
 			free(csecond_args[i]);
 		current_args[0] = csecond_args[0] = NULL;
 		input_dir[0] = output_dir[0] = '\0';
-		char first_char = Skip_Space(), *curr = cmdline;
 		/*
 		Simple syntax error detection
 		The useage of quotation marks are supported
 		*/
 		
+		char first_char = Skip_Space(), *curr = cmdline;
 		int Is_quo = (first_char == '"'), iswait = 1, toswap = 1;
 		if(first_char == '|')
 		{
