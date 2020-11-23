@@ -281,7 +281,7 @@ void run_pipe(
 				}
 			}
 		}
-		else wait(NULL);
+		else waitpid(pid, NULL, 0);
 	}
 	
 	for(int i = 0; i < cmd_len ;++i)

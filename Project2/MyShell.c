@@ -154,7 +154,7 @@ int main(void)
 			}
 		}
 		(*curr++) = '\0';
-		printf("%s\n", cmdline);
+		// printf("%s\n", cmdline);
 		
 		int synerr = Convert_To_Args(
 			&iswait, cmdline, current_args, 
@@ -215,7 +215,7 @@ int main(void)
 							printf("Fail to Create subprocess!");
 							exit(-1);
 						}
-						if(pid == 0)
+						else if(pid == 0)
 						{
 							int fd[2] = {0};
 							if(pipe(fd) < 0)
@@ -244,12 +244,13 @@ int main(void)
 								}
 							}
 						}
-						else wait(NULL);
+						else waitpid(pid, NULL, 0);
 					}
 				}
 				else printf("No commands in history.\n");
 			}
 		}
+		// Swap current and last
 		if(toswap)
 		{
 			char **temp_args; strcpy(lcmd, cmdline);
