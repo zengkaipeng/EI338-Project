@@ -154,17 +154,18 @@ int main(void)
 			}
 		}
 		(*curr++) = '\0';
-		printf("%s\n", cmdline);
+		// printf("%s\n", cmdline);
 		
 		int synerr = Convert_To_Args(
 			&iswait, cmdline, current_args, 
 			csecond_args, input_dir, output_dir
 		);
-		
+		/*
 		for(int i = 0; current_args[i] != NULL; ++i)
 			printf("ttt: %s\n", args[i]);
 		printf("Ip: %s\n", input_dir);
 		printf("Op: %s\n", output_dir);
+		*/
 		if(synerr)
 			printf("syntax error near unexpected token `newline'\n");
 		else
