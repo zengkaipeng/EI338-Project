@@ -184,7 +184,7 @@ int main(void)
 					{
 						int fin = -2, fout = -2;
 						if(strlen(input_dir) != 0) fin = open(input_dir, O_RDONLY);
-						if(strlen(output_dir) != 0) fout = open(output_dir, O_WRONLY | O_CREAT | O_TRUNC, STDIN_FILENO);
+						if(strlen(output_dir) != 0) fout = open(output_dir, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 						if(fin == -1 || fout == -1)
 							printf("Fail to open file!");
 						else

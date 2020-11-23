@@ -203,7 +203,7 @@ void run_single(
 		*/
 		int fin(-2), fout(-2);
 		if(Is_Input) fin = open(ipdir, O_RDONLY);
-		if(Is_Output) fout = open(opdir, O_WRONLY | O_CREAT | O_TRUNC, STDIN_FILENO);
+		if(Is_Output) fout = open(opdir, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if(fin == -1 || fout == -1)
 			printf("File operation Error!\n");
 		else run_core(
