@@ -59,7 +59,7 @@ int Convert_To_Args(
 		}
 		else if(cmdline[i] == '"')
 		{
-			for(lst = 0; cmdline[i + lst] != '"'; ) ++lst;
+			for(lst = 1; cmdline[i + lst] != '"'; ) ++lst;
 			curr[*cspace] = (char *) malloc(sizeof(char) * (lst + 5));
 			for(int j = 1; j < lst; ++j)
 				curr[*cspace][j - 1] = cmdline[i + j];
@@ -154,13 +154,17 @@ int main(void)
 			}
 		}
 		(*curr++) = '\0';
-		// printf("%s\n", cmdline);
+		printf("%s\n", cmdline);
 		
 		int synerr = Convert_To_Args(
 			&iswait, cmdline, current_args, 
 			csecond_args, input_dir, output_dir
 		);
 		
+		for(int i = 0; current_args[i] != NULL; ++i)
+			printf("ttt: %s\n", args[i]);
+		printf("Ip: %s\n", input_dir);
+		printf("Op: %s\n", output_dir);
 		if(synerr)
 			printf("syntax error near unexpected token `newline'\n");
 		else
