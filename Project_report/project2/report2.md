@@ -212,7 +212,7 @@ int main(void)
                         }
                         else
                             if(iswait) waitpid(pid, NULL, 0);
-                        	else waitpid(pid, NULL, WNOHANG);
+                            else waitpid(pid, NULL, WNOHANG);
                     }
                     if(fin != -1 && fin != -2) close(fin);
                     if(fout != -1 && fout != -2) close(fout);
