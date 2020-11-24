@@ -151,7 +151,7 @@ int Convert_To_Args(
 }
 ```
 
-#### Execution part
+#### Execution Part
 
 The getting all the parameters, we can create sub-process to execute every command. Two special commands require special operations:
 
@@ -189,8 +189,10 @@ int main(void)
                 if(uarg2[0] == NULL)
                 {
                     int fin = -2, fout = -2;
-                    if(strlen(input_dir) != 0) fin = open(input_dir, O_RDONLY);
-                    if(strlen(output_dir) != 0) fout = open(output_dir, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+                    if(strlen(input_dir) != 0) 
+                        fin = open(input_dir, O_RDONLY);
+                    if(strlen(output_dir) != 0) 
+                        fout = open(output_dir, O_WRONLY | O_CREAT | O_TRUNC, 0666);
                     if(fin == -1 || fout == -1)
                         printf("Fail to open file!");
                     else
@@ -208,7 +210,9 @@ int main(void)
                             execvp(uarg[0], uarg);
                             exit(0);
                         }
-                        else if(iswait) waitpid(pid, NULL, 0);
+                        else
+                            if(iswait) waitpid(pid, NULL, 0);
+                        	else waitpid(pid, NULL, WNOHANG);
                     }
                     if(fin != -1 && fin != -2) close(fin);
                     if(fout != -1 && fout != -2) close(fout);

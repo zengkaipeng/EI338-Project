@@ -175,7 +175,9 @@ void run_core(
 			execvp(argv[0], argv);
 			exit(0);
 		}
-		else if(Is_wait) waitpid(pid, NULL, 0);
+		else
+			if(Is_wait) waitpid(pid, NULL, 0);
+			else waitpid(pid, NULL, WNOHANG);
 	}
 }
 void run_single(
