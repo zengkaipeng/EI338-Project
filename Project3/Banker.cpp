@@ -103,7 +103,7 @@ inline int getint(FILE *f, bool &ef)
 Vec Available;
 vector<Vec> Max, Allocation, Need;
 int customer_cnt, resource_cnt;
-void release_resource(int customer_num, int release[])
+void release_resources(int customer_num, int release[])
 {
 	Vec tvec = Vec(resource_cnt, release);
 	if(tvec <= Allocation[customer_num])
@@ -118,30 +118,25 @@ void release_resource(int customer_num, int release[])
 }
 inline bool Check_Safety()
 {
-	bool *flag = new bool[customer_cnt + 5], tfind;
-	int *Stack = new int[customer_cnt + 5];
-	Stack[0] = 0;
-	memset(flag, 0, sizeof(bool) * (customer_cnt + 5));
+	bool *Finish = new bool[customer_cnt + 5], tfind;
+	memset(Finish, 0, sizeof(bool) * (customer_cnt + 5));
+	Vec Work = Available;
 	for(int i = 0; i < customer_cnt; ++i)
 	{
 		tfind = false;
 		for(int j = 0; j < customer_cnt; ++j)
-			if(!flag[j] && Need[j] <= Available)
+			if(!Finish[j] && Need[j] <= Work)
 			{
-				Available += Allocation[j];
-				Stack[++Stack[0]] = j;
-				tfind = flag[j] = true;
+				Work += Allocation[j];
+				tfind = Finish[j] = true;
 				break;
 			}
 		if(!tfind) break;
 	}
-	for(; Stack[0]; --Stack[0])
-		Available -= Allocation[Stack[Stack[0]]];
-	delete []flag;
-	delete []Stack;
+	delete []Finish;
 	return tfind;
 }
-inline int request_resource(int customer_num, int request[])
+inline int request_resources(int customer_num, int request[])
 {
 	Vec tvec = Vec(resource_cnt, request);
 	if(tvec <= Need[customer_num])
@@ -218,14 +213,14 @@ int main(int argc, char *argv[])
 				scanf("%d", nums + i);
 			if(strcmp(cmd, "RQ") == 0)
 			{
-				int tx = request_resource(idx, nums);
+				int tx = request_resources(idx, nums);
 				if(tx == -1)
 					puts("[INFO] Fail to Grant the Request");
 				if(tx == 0)
 					puts("[INFO] The Request is Granted");
 			}
 			else if(strcmp(cmd, "RL") == 0)
-				release_resource(idx, nums);
+				release_resources(idx, nums);
 		}
 		putchar('>');
 	}
