@@ -278,11 +278,12 @@ If a request is denied, the program will output `[INFO] Fail to Grant the Reques
 #### Case 1
 
 <center class='half'>
-	<img src='1.png' style="width: 35%;"><img src='2.png' style="width: 31%;"><img src='3.png' style="width: 33%;">
+	<img src='1.png' style="width: 36%; margin-right: 1%; float: left;"><img src='2.png' style="width: 30%; margin-right: 1%; float: left;"><img src='3.png' style="width: 32%; float: left;">
 </center>
+
 #### Case 2
-<center class='half'>
-	<img src='4.png' style="width: 39%;"><img src='5.png' style="width: 31%;"><img src='6.png' style="width: 30%;">
+<center class='half' style="width: 100%; ">
+	<img src='4.png' style="width: 40%; margin-right: 1%; float: left;"><img src='5.png' style="width: 29%; margin-right: 1%; float: left;"><img src='6.png' style="width: 29%; float: left;">
 </center>
 
 
