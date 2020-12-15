@@ -4,9 +4,6 @@
 #include <iostream>
 
 typedef long long ll;
-typedef unsigned long long ull;
-const ull seed = 20000819;
-const ull mod = 1e9 + 7;
 ll MAX;
 
 struct Mem_Block
