@@ -50,28 +50,6 @@ void Remove_Block(Mem_Block *Now)
 	delete Now;
 }
 
-void Compact(Mem_Block *Now)
-{
-	if(Now->Occupied) return;
-	while(true)
-	{
-		if(Now->Pre == NULL) break;
-		if(Now->Pre->Occupied == false)
-			Now = Now->Pre;
-		else break;
-	}
-	
-	while(true)
-	{
-		if(Now->Next == NULL) break;
-		if(Now->Next->Occupied == false)
-		{
-			Now->size += Now->Next->size;
-			Remove_Block(Now->Next);
-		}
-		else break;
-	}
-}
 
 Mem_Block* Find_Block(ll Size, char Policy)
 {
@@ -122,12 +100,29 @@ int Request_Mem(char *Process_Name, ll Size, char Policy)
 	return 1;
 }
 
-void Release_Mem(char *Process_Name)
+void Release_Mem(const char* Process_Name)
 {
-	for(Mem_Block *it = Fst; it != NULL; it = it->Next)
+	for(Mem_Block *it = Fst; it; it = it->Next)
 		if(it->Occupied)
 			if(strcmp(it->Process_Name, Process_Name) == 0)
+			{
 				it->Release();
+				if(it->Pre)
+					if(!it->Pre->Occupied)
+					{
+						it->size += it->Pre->size;
+						it->start = it->Pre->start;
+						if(it->Pre == Fst) 
+							Fst = it;
+						Remove_Block(it->Pre);
+					}
+				if(it->Next)
+					if(!it->Next->Occupied)
+					{
+						it->size += it->Next->size;
+						Remove_Block(it->Next);
+					}
+			}
 }
 
 void Output_Mem()
@@ -136,6 +131,33 @@ void Output_Mem()
 		it->Output("\n");
 }
 
+void Recal_Start()
+{
+	for(Mem_Block *it = Fst->Next; it; it = it->Next)
+		it->start = it->Pre->start + it->Pre->size;
+}
+void Compact()
+{
+	Mem_Block *tail = Fst;
+	while(tail->Next) tail = tail->Next;
+	
+	ll Available = 0;
+	for(Mem_Block *it = Fst; it; it = it->Next)
+		if(!it->Occupied) Available += it->size;
+	
+	tail->Next = new Mem_Block(
+		Available, 0, NULL, false, 
+		tail, NULL
+	);
+	
+	Mem_Block *it1 = Fst, *it2 = Fst->Next;
+	while(it2)
+	{
+		if(!it1->Occupied) Remove_Block(it1);
+		it1 = it2; it2 = it1->Next;
+	}
+	Recal_Start();
+}
 int main(int argc, char **argv)
 {
 	if(argc < 2)
@@ -156,8 +178,7 @@ int main(int argc, char **argv)
 		if(strcmp(cmd, "X") == 0)
 			break;
 		if(strcmp(cmd, "C") == 0)
-			for(Mem_Block *it = Fst; it; it = it->Next)
-				Compact(it);
+			Compact();
 		if(strcmp(cmd, "STAT") == 0)
 			Output_Mem();
 		if(strcmp(cmd, "RL") == 0)
@@ -176,6 +197,15 @@ int main(int argc, char **argv)
 		}
 		printf("allocator>");
 	}
-	delete Fst;
+	
+	Mem_Block *it1 = Fst, *it2 = Fst->Next;
+	while(it2)
+	{
+		delete it1;
+		it1 = it2; 
+		it2 = it1->Next;
+	}
+	delete it1;
+	
 	return 0;
 }
