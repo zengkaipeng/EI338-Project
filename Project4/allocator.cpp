@@ -133,6 +133,7 @@ void Output_Mem()
 
 void Recal_Start()
 {
+	Fst->start = 0;
 	for(Mem_Block *it = Fst->Next; it; it = it->Next)
 		it->start = it->Pre->start + it->Pre->size;
 }
@@ -153,7 +154,12 @@ void Compact()
 	Mem_Block *it1 = Fst, *it2 = Fst->Next;
 	while(it2)
 	{
-		if(!it1->Occupied) Remove_Block(it1);
+		if(!it1->Occupied) 
+		{
+			if(it1 == Fst)
+				Fst = it1->Next;
+			Remove_Block(it1);
+		}
 		it1 = it2; it2 = it1->Next;
 	}
 	Recal_Start();
@@ -209,3 +215,11 @@ int main(int argc, char **argv)
 	
 	return 0;
 }
+/*
+RQ P0 100 W
+RQ P0 100 W
+RQ P1 200 B
+RL P0
+STAT
+C
+*/
