@@ -78,10 +78,47 @@ int main(int argc, char **argv)
 	MAX = atoll(argv[1]);
 	Fst = new Mem_Block(MAX, 0);
 	
+	/* Initiation Ends */
+	
 	printf("allocator>");
-	/*
-	omitted part.
-	*/
+	
+	char cmd[20], Process_Name[50], Policy;
+	ll Req_Size;
+	while(true)
+	{
+		scanf(" %s", cmd);
+		if(strcmp(cmd, "X") == 0)
+			break;
+		if(strcmp(cmd, "C") == 0)
+			Compact();
+		if(strcmp(cmd, "STAT") == 0)
+			Output_Mem();
+		if(strcmp(cmd, "RL") == 0)
+		{
+			scanf(" %s", Process_Name);
+			Release_Mem(Process_Name);
+		}
+		if(strcmp(cmd, "RQ") == 0)
+		{
+			scanf(" %s", Process_Name);
+			std::cin >> Req_Size;
+			scanf(" %c", &Policy);
+			int tx = Request_Mem(Process_Name, Req_Size, Policy);
+			if(tx == -1)
+				printf("[INFO] No Feasible Memory to Allocate\n");
+		}
+		printf("allocator>");
+	}
+	
+	Mem_Block *it1 = Fst, *it2 = Fst->Next;
+	while(it2)
+	{
+		delete it1;
+		it1 = it2; 
+		it2 = it1->Next;
+	}
+	delete it1;
+	
 	return 0;
 }
 ```

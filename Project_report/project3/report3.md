@@ -267,6 +267,86 @@ if(strcmp(cmd, "*") == 0)
 }
 ```
 
+#### Complete `Main` Function
+
+```c++
+int main(int argc, char *argv[])
+{
+	printf("[INFO] Initializing...\n");
+	int *nums = new int[argc + 1];
+	for(int i = 1; i < argc; ++i)
+		nums[i - 1] = atoi(argv[i]);
+	
+	Available = Vec(argc - 1, nums);
+	resource_cnt = argc - 1;
+	
+	printf("[INFO] Generating Max Matrix...\n");
+	FILE * fmax = fopen("Max.txt", "r");
+	for(int p, tc(0); true;)
+	{
+		bool fl = false;
+		p = getint(fmax, fl);
+		if(fl) break;
+		nums[tc++] = p;
+		if(tc == argc - 1)
+		{
+			Max.push_back(Vec(tc, nums));
+			Need.push_back(Vec(tc, nums));
+			Allocation.push_back(Vec(tc, 0));
+			tc = 0;
+		}
+	}
+	fclose(fmax);
+	customer_cnt = Max.size();
+	printf("[INFO] Done\n");
+	
+	putchar('>');
+	char cmd[10];
+	for(int idx; ~scanf(" %s", cmd);)
+	{
+		if(strcmp(cmd, "*") == 0)
+		{
+			puts("Available\n-------------------");
+			Available.output();
+			puts("");
+			puts("Maximun\n-------------------");
+			for(veit it = Max.begin(); it != Max.end(); ++it)
+				it -> output(true);
+			puts("");
+			puts("Allocation\n-------------------");
+			for(veit it = Allocation.begin(); it != Allocation.end(); ++it)
+				it -> output(true);
+			puts("");
+			puts("Need\n-------------------");
+			for(veit it = Need.begin(); it != Need.end(); ++it)
+				it -> output(true);
+			puts("");
+		}
+		else
+		{
+			scanf("%d", &idx);
+			for(int i = 0; i < argc - 1; ++i)
+				scanf("%d", nums + i);
+			if(strcmp(cmd, "RQ") == 0)
+			{
+				int tx = request_resources(idx, nums);
+				if(tx == -1)
+					puts("[INFO] Fail to Grant the Request");
+				if(tx == 0)
+					puts("[INFO] The Request is Granted");
+			}
+			else if(strcmp(cmd, "RL") == 0)
+				release_resources(idx, nums);
+		}
+		putchar('>');
+	}
+	delete []nums;
+	return 0;
+}
+```
+
+
+
 ### Result
 
 To verify the correctness of the code, I use data of problem (b), Assignment 11 as test case.
@@ -278,15 +358,13 @@ If a request is denied, the program will output `[INFO] Fail to Grant the Reques
 #### Case 1
 
 <center class='half'>
-	<img src='1.png' style="width: 36%; margin-right: 1%; float: left;"><img src='2.png' style="width: 30%; margin-right: 1%; float: left;"><img src='3.png' style="width: 32%; float: left;">
+	<img src='1.png' style="width: 36%; margin-right: 1%;  "><img src='2.png' style="width: 30%; margin-right: 1%;  "><img src='3.png' style="width: 32%;  ">
 </center>
 
 #### Case 2
 <center class='half' style="width: 100%; ">
-	<img src='4.png' style="width: 40%; margin-right: 1%; float: left;"><img src='5.png' style="width: 29%; margin-right: 1%; float: left;"><img src='6.png' style="width: 29%; float: left;">
+	<img src='4.png' style="width: 40%; margin-right: 1%;  "><img src='5.png' style="width: 29%; margin-right: 1%;  "><img src='6.png' style="width: 29%;  ">
 </center>
-
-
 ### Note
 
 To check the complete code, please visit https://github.com/zengkaipeng/EI338-Project/tree/main/Project3.
